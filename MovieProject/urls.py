@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url
+from rest_framework.documentation import include_docs_urls
 # from rest_framework_swagger.views import get_swagger_view
 
 #describe project level urls
@@ -26,5 +27,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls')),
     path('main/',include('movie_app.urls')),
+    path('', include_docs_urls(
+    	title='Movies REST API', public=True, authentication_classes=[], permission_classes=[]
+	)),
     # url(r'^$', schema_view)
 ]

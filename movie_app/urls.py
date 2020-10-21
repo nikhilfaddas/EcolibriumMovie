@@ -1,9 +1,14 @@
-from rest_framework.routers import SimpleRouter
-from movie_app.views import MoviesViewSet
+from django.urls import path
+from . import views
+from rest_framework.authtoken import views as rest_auth_views
+from rest_framework.routers import DefaultRouter
 
-# describe app level urls
+router = DefaultRouter()
+router.register(r'movies', views.MoviesViewSet, basename='movies')
+router.register(r'genre', views.GenreViewSet, basename='genre')
 
-simpleRouter = SimpleRouter()
-simpleRouter.register('list_movies',MoviesViewSet)
 
-urlpatterns = simpleRouter.urls
+urlpatterns = [
+    path('login/', rest_auth_views.obtain_auth_token, name='login'),
+    path('register/', views.RegisterAPIView.as_view(), name='register'),
+] + router.urls
